@@ -4,26 +4,14 @@
 const autoprefixer = require("gulp-autoprefixer");
 const browsersync = require("browser-sync").create();
 const cleanCSS = require("gulp-clean-css");
-const del = require("del");
+const { deleteAsync } = require("del");
 const gulp = require("gulp");
-const header = require("gulp-header");
 const merge = require("merge-stream");
 const plumber = require("gulp-plumber");
 const rename = require("gulp-rename");
-const sass = require("gulp-sass");
+const sass = require("gulp-sass")(require("sass"));
 const uglify = require("gulp-uglify");
 
-// Load package.json for banner
-const pkg = require('./package.json');
-
-// Set the banner content
-const banner = ['/*!\n',
-  ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
-  ' * Copyright 2013-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
-  ' * Licensed under <%= pkg.license %> (https://github.com/BlackrockDigital/<%= pkg.name %>/blob/master/LICENSE)\n',
-  ' */\n',
-  '\n'
-].join('');
 
 // BrowserSync
 function browserSync(done) {
@@ -44,7 +32,7 @@ function browserSyncReload(done) {
 
 // Clean vendor
 function clean() {
-  return del(["./vendor/"]);
+  return deleteAsync(["./vendor/"]);
 }
 
 // Bring third party dependencies from node_modules into vendor directory
@@ -86,9 +74,6 @@ function css() {
     .pipe(autoprefixer({
       cascade: false
     }))
-    .pipe(header(banner, {
-      pkg: pkg
-    }))
     .pipe(gulp.dest("./css"))
     .pipe(rename({
       suffix: ".min"
@@ -106,9 +91,6 @@ function js() {
       '!./js/*.min.js'
     ])
     .pipe(uglify())
-    .pipe(header(banner, {
-      pkg: pkg
-    }))
     .pipe(rename({
       suffix: '.min'
     }))
