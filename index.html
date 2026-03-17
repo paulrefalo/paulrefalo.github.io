@@ -1,262 +1,998 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Paul Refalo — Data Scientist & Software Developer with a background in chemistry, forensic science, and machine learning.">
+  <meta name="author" content="Paul Refalo">
+  <title>Paul Refalo — Data Scientist &amp; Developer</title>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚗️</text></svg>">
 
-  <title>Creative - Start Bootstrap Theme</title>
-
-  <!-- Font Awesome Icons -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- Font Awesome (CDN, no local vendor files) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <!-- Plugin CSS -->
-  <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+  <style>
+    /* ── Variables ─────────────────────────────────────────── */
+    :root {
+      --bg:        #1a1a1a;
+      --bg2:       #222222;
+      --bg3:       #2a2a2a;
+      --accent:    #e07b30;
+      --accent2:   #f0a060;
+      --text:      #eeeeee;
+      --text-muted:#9a9a9a;
+      --border:    #3a3a3a;
+      --radius:    0.75rem;
+      --shadow:    0 4px 24px rgba(0,0,0,0.5);
+      --font:      'Inter', system-ui, sans-serif;
+      --mono:      'Fira Mono', 'Courier New', monospace;
+      --max-w:     1100px;
+      --transition: 0.25s ease;
+    }
 
-  <!-- Theme CSS - Includes Bootstrap -->
-  <link href="css/creative.min.css" rel="stylesheet">
+    /* ── Reset & Base ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--accent2); }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
 
+    /* ── Layout Helpers ─────────────────────────────────────── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+    .section { padding: 5rem 0; }
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .section-title span { color: var(--accent); }
+    .divider {
+      width: 3rem;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Navigation ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(26, 26, 26, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1.25rem;
+      padding: 0.25rem;
+    }
+
+    /* ── Hero ───────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+      background-color: var(--bg);
+      /* Science dot-grid background */
+      background-image:
+        radial-gradient(ellipse 70% 55% at 35% 50%, rgba(224,123,48,0.09) 0%, transparent 65%),
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0);
+      background-size: auto, 28px 28px;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+      width: 100%;
+    }
+    .hero-name {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .hero-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+    .hero-tagline strong { color: var(--accent2); font-weight: 500; }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent2); color: #1a1a1a; }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-scroll {
+      margin-top: 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-family: var(--mono);
+    }
+    .scroll-line {
+      width: 2rem;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Flask image container */
+    .hero-visual {
+      width: 280px;
+      flex-shrink: 0;
+      opacity: 0.92;
+      filter: drop-shadow(0 8px 32px rgba(224,123,48,0.18));
+    }
+
+    /* ── About ──────────────────────────────────────────────── */
+    #about { background: var(--bg2); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-text p { color: var(--text-muted); margin-bottom: 1rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem 1.1rem;
+      transition: border-color var(--transition);
+    }
+    .contact-card:hover { border-color: var(--accent); }
+    .contact-card i {
+      width: 1.4rem;
+      text-align: center;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .contact-card span, .contact-card a {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .contact-card a:hover { color: var(--accent); }
+
+    /* ── Skills ─────────────────────────────────────────────── */
+    #skills { background: var(--bg); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .skill-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .skill-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .skill-card h3 i { color: var(--accent); }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      background: rgba(224,123,48,0.1);
+      color: var(--accent2);
+      border: 1px solid rgba(224,123,48,0.22);
+      border-radius: 0.4rem;
+      padding: 0.2rem 0.6rem;
+    }
+
+    /* ── Experience ─────────────────────────────────────────── */
+    #experience { background: var(--bg2); }
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.6rem;
+      top: 0.5rem;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: -2.05rem;
+      top: 0.35rem;
+      width: 0.85rem;
+      height: 0.85rem;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 2px solid var(--bg2);
+    }
+    .timeline-meta {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+    .timeline-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+    }
+    .timeline-org {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+    .timeline-org i { margin-right: 0.35rem; font-size: 0.8rem; }
+    .timeline-body ul { padding-left: 1rem; }
+    .timeline-body ul li {
+      position: relative;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+      padding-left: 0.5rem;
+    }
+    .timeline-body ul li::before {
+      content: '▸';
+      position: absolute;
+      left: -0.8rem;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    /* ── Education ──────────────────────────────────────────── */
+    #education { background: var(--bg); }
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .edu-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color var(--transition);
+    }
+    .edu-card:hover { border-color: var(--accent); }
+    .edu-year {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .edu-degree {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .edu-school { font-size: 0.9rem; color: var(--text-muted); }
+    .edu-location {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .edu-location i { margin-right: 0.3rem; font-size: 0.75rem; }
+
+    /* ── Projects ───────────────────────────────────────────── */
+    #projects { background: var(--bg2); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .project-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .project-year {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .project-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .project-context {
+      font-size: 0.82rem;
+      color: var(--accent2);
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+    .project-card p { font-size: 0.88rem; color: var(--text-muted); }
+
+    /* ── Publication ────────────────────────────────────────── */
+    #publication { background: var(--bg); }
+    .pub-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      max-width: 780px;
+    }
+    .pub-year {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .pub-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+    .pub-journal {
+      font-size: 0.9rem;
+      color: var(--accent2);
+      margin-bottom: 0.5rem;
+      font-style: italic;
+    }
+    .pub-authors { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* ── Contact ────────────────────────────────────────────── */
+    #contact { background: var(--bg2); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-intro p { color: var(--text-muted); margin-bottom: 1rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .contact-link:hover { border-color: var(--accent); transform: translateX(4px); }
+    .contact-link-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: rgba(224,123,48,0.12);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-link-text strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .contact-link-text span { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+    }
+    footer p { font-size: 0.85rem; color: var(--text-muted); }
+    footer a { color: var(--text-muted); }
+    footer a:hover { color: var(--accent); }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { width: 220px; margin: 0 auto; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: var(--bg2);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 1.5rem;
+        gap: 1rem;
+      }
+      .nav-toggle { display: block; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .section { padding: 3.5rem 0; }
+    }
+  </style>
 </head>
 
-<body id="page-top">
+<body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  <!-- ── Navigation ──────────────────────────────────────── -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-brand">Paul <span>Refalo</span></div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-          </li>
-        </ul>
-      </div>
     </div>
   </nav>
 
-  <!-- Masthead -->
-  <header class="masthead">
-    <div class="container h-100">
-      <div class="row h-100 align-items-center justify-content-center text-center">
-        <div class="col-lg-10 align-self-end">
-          <h1 class="text-uppercase text-white font-weight-bold">Your Favorite Source of Free Bootstrap Themes</h1>
-          <hr class="divider my-4">
-        </div>
-        <div class="col-lg-8 align-self-baseline">
-          <p class="text-white-75 font-weight-light mb-5">Start Bootstrap can help you build better websites using the Bootstrap framework! Just download a theme and start customizing, no strings attached!</p>
-          <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- About Section -->
-  <section class="page-section bg-primary" id="about">
+  <!-- ── Hero ────────────────────────────────────────────── -->
+  <section id="hero">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h2 class="text-white mt-0">We've got what you need!</h2>
-          <hr class="divider light my-4">
-          <p class="text-white-50 mb-4">Start Bootstrap has everything you need to get your new website up and running in no time! Choose one of our open source, free to download, and easy to use themes! No strings attached!</p>
-          <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Get Started!</a>
-        </div>
-      </div>
-    </div>
-  </section>
+      <div class="hero-inner">
 
-  <!-- Services Section -->
-  <section class="page-section" id="services">
-    <div class="container">
-      <h2 class="text-center mt-0">At Your Service</h2>
-      <hr class="divider my-4">
-      <div class="row">
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-gem text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Sturdy Themes</h3>
-            <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
+        <div class="hero-content">
+          <h1 class="hero-name">Paul Refalo</h1>
+          <p class="hero-tagline">
+            <strong>Data Scientist &amp; Software Developer</strong> with a background in
+            chemistry, forensic science, and machine learning. Turning complex data
+            into actionable insight.
+          </p>
+          <div class="hero-cta">
+            <a href="#experience" class="btn btn-primary">
+              <i class="fas fa-briefcase"></i> View Experience
+            </a>
+            <a href="#contact" class="btn btn-outline">
+              <i class="fas fa-envelope"></i> Get in Touch
+            </a>
+          </div>
+          <div class="hero-scroll">
+            <div class="scroll-line"></div>
+            <span>scroll to explore</span>
           </div>
         </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-laptop-code text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Up to Date</h3>
-            <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
-          </div>
+
+        <!-- Flask logo -->
+        <div class="hero-visual">
+          <img src="flaskR.png" alt="Erlenmeyer flask with R, Python, and Swift logos" width="280" height="280">
         </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-globe text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Ready to Publish</h3>
-            <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-heart text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Made with Love</h3>
-            <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
-          </div>
-        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Portfolio Section -->
-  <section id="portfolio">
-    <div class="container-fluid p-0">
-      <div class="row no-gutters">
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/1.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/1.jpg" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Category
-              </div>
-              <div class="project-name">
-                Project Name
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/2.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/2.jpg" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Category
-              </div>
-              <div class="project-name">
-                Project Name
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/3.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/3.jpg" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Category
-              </div>
-              <div class="project-name">
-                Project Name
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/4.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/4.jpg" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Category
-              </div>
-              <div class="project-name">
-                Project Name
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/5.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/5.jpg" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Category
-              </div>
-              <div class="project-name">
-                Project Name
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/6.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/6.jpg" alt="">
-            <div class="portfolio-box-caption p-3">
-              <div class="project-category text-white-50">
-                Category
-              </div>
-              <div class="project-name">
-                Project Name
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action Section -->
-  <section class="page-section bg-dark text-white">
-    <div class="container text-center">
-      <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
-      <a class="btn btn-light btn-xl" href="https://startbootstrap.com/themes/creative/">Download Now!</a>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="page-section" id="contact">
+  <!-- ── About ───────────────────────────────────────────── -->
+  <section id="about" class="section">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h2 class="mt-0">Let's Get In Touch!</h2>
-          <hr class="divider my-4">
-          <p class="text-muted mb-5">Ready to start your next project with us? Give us a call or send us an email and we will get back to you as soon as possible!</p>
+      <h2 class="section-title">About <span>Me</span></h2>
+      <div class="divider"></div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I'm a data scientist and software developer whose career spans forensic toxicology,
+            mass spectrometry, neural network development, and graduate-level data analytics.
+            That breadth gives me a rare ability to move comfortably between the lab bench,
+            the command line, and the boardroom.
+          </p>
+          <p>
+            I hold master's degrees in both Data Analytics (Oregon State University) and
+            Biochemistry (OHSU), and a B.S. in Chemistry from the University of Colorado.
+            This science-first foundation shapes the rigor I bring to every data problem.
+          </p>
+          <p>
+            Outside of work I'm passionate about data visualization, open-source tooling,
+            and teaching — I've instructed courses in Perl, HTML/CSS, JavaScript, and Chemistry.
+          </p>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-          <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-          <div>+1 (202) 555-0149</div>
-        </div>
-        <div class="col-lg-4 mr-auto text-center">
-          <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-          <!-- Make sure to change the email address in anchor text AND the link below! -->
-          <a class="d-block" href="mailto:contact@yourwebsite.com">contact@yourwebsite.com</a>
+        <div class="contact-cards">
+          <a class="contact-card" id="email-link-about" href="#">
+            <i class="fas fa-envelope"></i>
+            <span id="email-text-about">[enable JavaScript to view]</span>
+          </a>
+          <a class="contact-card" href="https://github.com/paulrefalo" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i>
+            <span>github.com/paulrefalo</span>
+          </a>
+          <a class="contact-card" href="https://linkedin.com/in/parefalo" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin"></i>
+            <span>linkedin.com/in/parefalo</span>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-light py-5">
+  <!-- ── Skills ──────────────────────────────────────────── -->
+  <section id="skills" class="section">
     <div class="container">
-      <div class="small text-center text-muted">Copyright &copy; 2019 - Start Bootstrap</div>
+      <h2 class="section-title">Skills &amp; <span>Technologies</span></h2>
+      <div class="divider"></div>
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <h3><i class="fas fa-code"></i> Programming Languages</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">R</span>
+            <span class="skill-tag">Perl</span>
+            <span class="skill-tag">Swift</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">Bash</span>
+            <span class="skill-tag">JavaScript</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3><i class="fas fa-brain"></i> Machine Learning &amp; AI</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">Neural Networks</span>
+            <span class="skill-tag">Random Forest</span>
+            <span class="skill-tag">ARIMA</span>
+            <span class="skill-tag">Statistical Learning</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3><i class="fas fa-chart-line"></i> Data &amp; Visualization</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">D3.js</span>
+            <span class="skill-tag">pandas</span>
+            <span class="skill-tag">SQLite</span>
+            <span class="skill-tag">Excel</span>
+            <span class="skill-tag">LaTeX</span>
+            <span class="skill-tag">MS Office</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3><i class="fas fa-flask"></i> Scientific Domains</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">LC/MS/MS</span>
+            <span class="skill-tag">Toxicology</span>
+            <span class="skill-tag">Biochemistry</span>
+            <span class="skill-tag">Forensic Science</span>
+            <span class="skill-tag">Machine Vision</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3><i class="fas fa-cogs"></i> Methods &amp; Practices</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Statistical Analysis</span>
+            <span class="skill-tag">Data Cleaning</span>
+            <span class="skill-tag">Optimization</span>
+            <span class="skill-tag">Reporting</span>
+            <span class="skill-tag">Project Management</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3><i class="fas fa-chalkboard-teacher"></i> Teaching &amp; Communication</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Technical Instruction</span>
+            <span class="skill-tag">Expert Testimony</span>
+            <span class="skill-tag">Academic Writing</span>
+            <span class="skill-tag">Curriculum Design</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Experience ──────────────────────────────────────── -->
+  <section id="experience" class="section">
+    <div class="container">
+      <h2 class="section-title">Professional <span>Experience</span></h2>
+      <div class="divider"></div>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">2015 – Present</div>
+          <div class="timeline-title">Mass Spectrometry Specialist</div>
+          <div class="timeline-org">
+            <i class="fas fa-building"></i>Alturas Analytics · Portland, OR
+          </div>
+          <div class="timeline-body">
+            <ul>
+              <li>Maintain a fleet of LC/MS/MS systems, significantly reducing downtime</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">2019 – 2020</div>
+          <div class="timeline-title">Data Scientist</div>
+          <div class="timeline-org">
+            <i class="fas fa-building"></i>Spot Vision · Portland, OR
+          </div>
+          <div class="timeline-body">
+            <ul>
+              <li>Developed neural networks with PyTorch for machine vision tasks</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">2014 – 2015</div>
+          <div class="timeline-title">Field Service Engineer</div>
+          <div class="timeline-org">
+            <i class="fas fa-building"></i>SCIEX · Pacific Northwest, USA
+          </div>
+          <div class="timeline-body">
+            <ul>
+              <li>Maintained Sciex and Shimadzu LC/MS/MS systems in the field</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">2005 – 2014</div>
+          <div class="timeline-title">Forensic Scientist</div>
+          <div class="timeline-org">
+            <i class="fas fa-building"></i>Oregon State Police – Forensic Services Division · Portland, OR
+          </div>
+          <div class="timeline-body">
+            <ul>
+              <li>Designed, built, and maintained a post-mortem toxicology program</li>
+              <li>Testified regularly in state and federal courts as an expert witness</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">1988 – 1992</div>
+          <div class="timeline-title">RADAR Technician</div>
+          <div class="timeline-org">
+            <i class="fas fa-building"></i>US Air Force · Global
+          </div>
+          <div class="timeline-body">
+            <ul>
+              <li>Maintained RADAR systems to the component level worldwide</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Teaching -->
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background: var(--accent2);"></div>
+          <div class="timeline-meta" style="color: var(--accent2);">2014 – 2016 · Teaching</div>
+          <div class="timeline-title">Instructor — Perl, HTML/CSS &amp; JavaScript</div>
+          <div class="timeline-org">
+            <i class="fas fa-chalkboard-teacher"></i>O'Reilly School of Technology · Portland, OR
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background: var(--accent2);"></div>
+          <div class="timeline-meta" style="color: var(--accent2);">2003 – 2004 · Teaching</div>
+          <div class="timeline-title">Chemistry Instructor</div>
+          <div class="timeline-org">
+            <i class="fas fa-chalkboard-teacher"></i>Portland Community College · Portland, OR
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Education ───────────────────────────────────────── -->
+  <section id="education" class="section">
+    <div class="container">
+      <h2 class="section-title"><span>Education</span></h2>
+      <div class="divider"></div>
+      <div class="edu-grid">
+
+        <div class="edu-card">
+          <div class="edu-year">2019</div>
+          <div class="edu-degree">M.S. in Data Analytics</div>
+          <div class="edu-school">Oregon State University</div>
+          <div class="edu-location"><i class="fas fa-map-marker-alt"></i>Corvallis, OR</div>
+        </div>
+
+        <div class="edu-card">
+          <div class="edu-year">2003</div>
+          <div class="edu-degree">M.S. in Biochemistry</div>
+          <div class="edu-school">Oregon Health Sciences University (OHSU)</div>
+          <div class="edu-location"><i class="fas fa-map-marker-alt"></i>Portland, OR</div>
+        </div>
+
+        <div class="edu-card">
+          <div class="edu-year">1997</div>
+          <div class="edu-degree">B.S. in Chemistry</div>
+          <div class="edu-school">University of Colorado</div>
+          <div class="edu-location"><i class="fas fa-map-marker-alt"></i>Colorado Springs, CO</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Projects ────────────────────────────────────────── -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title">Data <span>Projects</span></h2>
+      <div class="divider"></div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-year">2018 – 2019</div>
+          <h3>Colorado Wilderness Cover-type Analysis</h3>
+          <div class="project-context">OSU Data Analytics Graduate Program</div>
+          <p>
+            Analyzed and cleaned data for Roosevelt Wilderness Area in Colorado.
+            Developed random forest models in R to predict cover-type by covariates
+            with ~90% accuracy.
+          </p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-year">2018 – 2019</div>
+          <h3>Hepatitis A Time Series Forecasting</h3>
+          <div class="project-context">OSU Data Analytics Graduate Program</div>
+          <p>
+            Developed ARIMA time series models to forecast Hepatitis A infection
+            rates in Oregon based on historical epidemiological data.
+          </p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-year">2018 – 2019</div>
+          <h3>US Solar Data Analysis</h3>
+          <div class="project-context">OSU Data Analytics Graduate Program</div>
+          <p>
+            Analyzed ~1.7 GB of US solar data using bash tools and SQLite to query
+            data into pandas DataFrames; results archived in CSV and JSON formats.
+          </p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-year">2020 – 2024</div>
+          <h3>WSJ Best Managed Companies</h3>
+          <div class="project-context">Wall Street Journal</div>
+          <p>
+            Contributed to the annual Wall Street Journal Best Managed Companies ranking,
+            sourcing, cleaning, and integrating multi-year corporate performance data
+            across hundreds of companies to produce the published metrics and scores.
+          </p>
+        </div>
+
+        <div class="project-card">
+          <div class="project-year">2025</div>
+          <h3>WSJ Best Boards</h3>
+          <div class="project-context">Bendable Labs</div>
+          <p>
+            Worked on the Wall Street Journal Best Boards ranking, compiling and
+            analyzing governance and board-performance data across major U.S. companies
+            to support the published results.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Publication ─────────────────────────────────────── -->
+  <section id="publication" class="section">
+    <div class="container">
+      <h2 class="section-title">Selected <span>Publication</span></h2>
+      <div class="divider"></div>
+      <div class="pub-card">
+        <div class="pub-year">2004</div>
+        <div class="pub-title">
+          Redundancy of the two dicer genes in transgene-induced posttranscriptional
+          gene silencing in <em>Neurospora crassa</em>
+        </div>
+        <div class="pub-journal">Mol Cell Biol. 2004 Mar;24(6):2536–45.</div>
+        <div class="pub-authors">
+          Catalanotto C, Pallotta M, ReFalo P, Sachs MS, Vayssie L, Macino G, Cogoni C.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ─────────────────────────────────────────── -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">Get in <span>Touch</span></h2>
+      <div class="divider"></div>
+      <div class="contact-grid">
+        <div class="contact-intro">
+          <p>
+            I'm open to challenging roles in data science, analytics, and software development —
+            especially where a scientific mindset and cross-disciplinary experience add real value.
+          </p>
+          <p>
+            Whether you have a project in mind, a question about my work, or just want to connect,
+            feel free to reach out through any of the channels below.
+          </p>
+        </div>
+        <div class="contact-links">
+          <a class="contact-link" id="email-link-contact" href="#">
+            <div class="contact-link-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-link-text">
+              <strong>Email</strong>
+              <span id="email-text-contact">[enable JavaScript to view]</span>
+            </div>
+          </a>
+          <a class="contact-link" href="https://github.com/paulrefalo" target="_blank" rel="noopener noreferrer">
+            <div class="contact-link-icon"><i class="fab fa-github"></i></div>
+            <div class="contact-link-text">
+              <strong>GitHub</strong>
+              <span>github.com/paulrefalo</span>
+            </div>
+          </a>
+          <a class="contact-link" href="https://linkedin.com/in/parefalo" target="_blank" rel="noopener noreferrer">
+            <div class="contact-link-icon"><i class="fab fa-linkedin"></i></div>
+            <div class="contact-link-text">
+              <strong>LinkedIn</strong>
+              <span>linkedin.com/in/parefalo</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ──────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Paul Refalo &nbsp;·&nbsp;
+        <a href="https://github.com/paulrefalo" target="_blank" rel="noopener noreferrer">github.com/paulrefalo</a>
+      </p>
     </div>
   </footer>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Vanilla JS: mobile nav + email obfuscation -->
+  <script>
+    // Mobile nav toggle
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a =>
+      a.addEventListener('click', () => links.classList.remove('open'))
+    );
 
-  <!-- Plugin JavaScript -->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="js/creative.min.js"></script>
+    // Email obfuscation — never written in plain HTML, assembled at runtime only
+    (function() {
+      const u = 'paul' + '.' + 'refalo';
+      const d = 'gmail' + '.' + 'com';
+      const addr = u + '\u0040' + d;
+      const mailto = 'mail' + 'to:' + addr;
+      [
+        ['email-link-about',   'email-text-about'],
+        ['email-link-contact', 'email-text-contact']
+      ].forEach(function([linkId, textId]) {
+        var el = document.getElementById(linkId);
+        var tx = document.getElementById(textId);
+        if (el) el.href = mailto;
+        if (tx) tx.textContent = addr;
+      });
+    })();
+  </script>
 
 </body>
-
 </html>
